@@ -1,0 +1,94 @@
+Insert Record into Mongo
+
+db.Employee.insert
+	(
+		{
+			"Employeeid" : 1,
+			"EmployeeName" : "Martin"
+		}
+	)
+-------------------------------------------------
+
+Inserting as an Array
+
+var myEmployee=
+	[
+	
+		{
+			"Employeeid" : 1,
+			"EmployeeName" : "Smith"
+		},
+		{
+			"Employeeid"   : 2,
+			"EmployeeName" : "Mohan"
+		},
+		{
+			"Employeeid"   : 3,
+			"EmployeeName" : "Joe"
+		},
+
+	];
+
+	db.Employee.insert(myEmployee);
+-----------------------------------------------------------------------
+
+Mongo db generates it's own id for every record, if we required to create our own id, we can use command as follows.
+
+db.Employee.insert({_id:10, "EmployeeName" : "Smith"})
+------------------------------------------------
+
+
+
+Searching records
+
+1.Here we want to find for an Employee whose name is "Smith" in the collection , hence we enter the filter criteria as EmployeeName : "Smith"
+
+     db.Employee.find({EmployeeName : "Smith"}).forEach(printjson);
+
+2. Find for all Employee's whose id is greater than 2
+
+    db.Employee.find({Employeeid : {$gt:2}}).forEach(printjson);
+
+3. MongoDB cursor: By default, the cursor will be iterated automatically when the result of the query is returned. But one can also explicitly go through the items returned in the cursor one by one.
+
+     var myEmployee = db.Employee.find( { Employeeid : { $gt:2 }});
+
+	while(myEmployee.hasNext())
+	
+	{
+
+		print(tojson(myEmployee.next()));
+	
+	}
+
+4. Limits: This modifier is used to limit the number of documents which are returned in the result set for a query. The following example shows how this can be done.   
+     db.Employee.find().limit(2).forEach(printjson);
+
+
+5. descending order of any key in the collection:  -1 for descending order, 1 for acending order.
+  db.Employee.find().sort({Employeeid:-1}).forEach(printjson)
+
+6. count of records: db.Employee.count()
+
+Deleting records:
+1. db.Employee.remove({Employeeid:22})
+
+Updating records:
+1. Choose which Field Name you want to modify and enter the new value accordingly.
+
+db.Employee.update( {"Employeeid" : 1}, {$set: { "EmployeeName" : "Bhimsen"}});
+
+2. Multiple columns update:Choose which Field Name's you want to modify and enter their new value accordingly.
+         db.Employee.update
+	(
+		{
+			Employeeid : 1
+		},
+		{
+			$set :
+			{
+				"EmployeeName" : "Bhimsen"
+				"Employeeid" : 22
+			}
+		}
+	)

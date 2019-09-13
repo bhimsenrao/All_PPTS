@@ -1,0 +1,44 @@
+Array Functions
+1.  every
+    function isBigEnough(element, index, array) { 
+   return (element >= 10); 
+} 
+          
+var passed = [12, 5, 8, 130, 44].every(isBigEnough); 
+console.log("Test Value : " + passed );
+-----------------------------------------
+
+2.concat
+
+var alpha = ["a", "b", "c"]; 
+var numeric = [1, 2, 3];
+
+var alphaNumeric = alpha.concat(numeric); 
+console.log("alphaNumeric : " + alphaNumeric );
+--------------------------------------------------------
+
+3. filter
+function isBigEnough(element, index, array) { 
+   return (element >= 10); 
+} 
+          
+var passed = [12, 5, 8, 130, 44].filter(isBigEnough); 
+console.log("Test Value : " + passed );
+-----------------------------------------------
+
+4. forEach
+let num = [7, 8, 9];
+num.forEach(function (value) {
+  console.log(value);
+}); 
+-----------------------------------------------
+
+5. indexOf
+var index = [12, 5, 8, 130, 44].indexOf(8); 
+console.log("index is : " + index );
+-----------------------------------------
+
+6.sort
+var arr = new Array("orange", "mango", "banana", "sugar"); 
+var sorted = arr.sort(); 
+console.log("Returned string is : " + sorted );

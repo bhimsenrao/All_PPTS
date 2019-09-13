@@ -1,0 +1,154 @@
+export function greet(name){
+  return 'welcome '+name;
+}
+-----
+test case
+
+import { greet} from './greet';
+
+ describe('greet',()=>{
+    it('should include the name in th message',()=>{
+          expect(greet('Bhimsen')).toBe('Welcome Bhim');
+     })
+
+});
+-----------------------------------
+Testing Arrays
+File: getLocations.ts
+export function getLocations(){
+    return ['North','South','East','West'];
+}
+
+File: getLocations.spec.ts
+
+import {getLocations} from './getLocations';
+
+describe('getLocations',()=>{
+
+  it('return specific locations',()=>{
+     const result=getLocations();
+     expect(result).toContain('North');
+     expect(result).toContain('South');
+     expect(result).toContain('West');
+     expect(result).toContain('East');
+
+   })
+});
+---------------------------------------------------
+Testing angular component
+
+File:VoteComponent.ts
+
+export class VoteComponent{
+
+totalVotes=0;
+upVote(){
+    this.totalVotes++;
+}
+
+downVote(){
+
+   this.totalVotes--;
+}
+}
+
+File:vote.component.spec.ts
+// This will follow Arrage Act Assert scenario
+
+import {VoteComponent} from './VoteComponent';
+
+describe('VoteComponent' , ()=>{
+
+   it('should increment when up voted',()=>{
+
+           //Arrange
+          let component=new VoteComponent();
+          // Act
+          component.upVote();
+          //Assert
+          expect(component.totalVotes).toBe(1); 
+       });
+ 
+   it('should be decreased when down voted',()=>{
+            
+          let component=new VoteComponent();
+          component.downVote();
+          expect(component.totalVotes).toBe(0);
+    });
+});
+================
+note:The above approach can be simplified as
+
+
+import {VoteComponent} from './VoteComponent';
+
+describe('VoteComponent' , ()=>{
+          let component=new VoteComponent();
+
+   it('should increment when up voted',()=>{
+          component.upVote();
+          expect(component.totalVotes).toBe(1); 
+       });
+ 
+   it('should be decreased when down voted',()=>{
+            
+          component.downVote();
+          expect(component.totalVotes).toBe(0);
+    });
+});
+note: In this only one case will be executed , to make each case to execute we can re-write it as
+=============
+note: fdescribe()  --> runs current, xdescribe()---> exclude current
+
+
+import {VoteComponent} from './VoteComponent';
+
+
+
+describe('VoteComponent' , ()=>{
+          let component:VoteComponent;
+     beforeEach(()=>{
+         component=new VoteComponent();
+     });
+// this will cause to intialize component before load of each case, so that, each case is independant of other
+// in jasminse we have other three methods 
+// afterEach(), beforeAll(), afterAll()
+
+
+
+
+   it('should increment when up voted',()=>{
+          component.upVote();
+          expect(component.totalVotes).toBe(1); 
+       });
+ 
+   it('should be decreased when down voted',()=>{
+            
+          component.downVote();
+          expect(component.totalVotes).toBe(0);
+    });
+});
+
+============================================================
+
+creating new service
+
+stpe 1:
+
+> ng g service test
+
+write add function in TestService.ts
+
+  ex:
+    add(a,b){
+    return a+b;
+   }
+
+step2:
+  open test.service.spec.ts
+you will find TestBed  imported
+
+TestBed used to inject test services as part of test from angular
+-------------------
+To run karma test on firefox , open karma.conf.js  this is not automatically available so install
+npm  install --g karma-firefox-launcher --save-dev

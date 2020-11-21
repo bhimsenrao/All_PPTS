@@ -1,0 +1,2 @@
+awk "BEGIN { for (i = 1; i <= 7; i++)
+print int(101 * rand()) }"
